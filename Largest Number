@@ -1,0 +1,61 @@
+import java.util.Arrays; 
+
+class Solution {
+    public static String largestNumber(int[] nums) {
+        int n = nums.length;
+        
+       
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                
+            
+                long multiplierJ = getMultiplier(nums[j]);
+                long multiplierI = getMultiplier(nums[i]);
+
+              
+                long order1 = nums[i] * multiplierJ + nums[j];
+                
+        
+                long order2 = nums[j] * multiplierI + nums[i];
+
+               
+                if (order2 > order1) {
+                    int m = nums[i]; 
+                    nums[i] = nums[j];
+                    nums[j] = m;
+                }
+            }
+        }
+
+        if (nums[0] == 0) {
+            return "0";
+        }
+
+        StringBuilder s = new StringBuilder();
+        for (int num : nums) {
+            s.append(num);
+        }
+
+        return s.toString();
+    }
+
+    private static long getMultiplier(int num) {
+        if (num == 0) return 10;
+        
+        long multiplier = 1;
+        int temp = num;
+        
+      
+        while (temp > 0) {
+            multiplier *= 10;
+            temp = temp / 10; 
+        }
+        
+        return multiplier;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {3, 30, 34, 5, 9};
+        System.out.println(largestNumber(nums));
+    }
+}
