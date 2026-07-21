@@ -1,0 +1,16 @@
+from typing import List
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        counts = {}
+        
+        max_count = 0
+        ele = nums[0]
+        
+        for i in nums:
+            counts[i] = counts.get(i, 0) + 1
+            if counts[i] > max_count:
+                max_count = counts[i]
+                ele = i
+                
+        return ele
