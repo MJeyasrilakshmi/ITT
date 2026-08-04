@@ -1,0 +1,32 @@
+class Solution {
+    public int longestSubstring(String s, int k) {
+        if (s == null || s.length() == 0 || k > s.length()) {
+            return 0;
+        }
+        if (k <= 1) {
+            return s.length();
+        }
+        
+        return helper(s, 0, s.length(), k);
+    }
+    
+    private int helper(String s, int start, int end, int k) {
+        if (end - start < k) {
+            return 0;
+        }
+        int[] counts = new int[26];
+        for (int i = start; i < end; i++) {
+            counts[s.charAt(i) - 'a']++;
+        }
+        for (int i = start; i < end; i++) {
+            char c = s.charAt(i);
+            if (counts[c - 'a'] < k) {
+                int leftSub = helper(s, start, i, k);
+                int rightSub = helper(s, i + 1, end, k);
+                return Math.max(leftSub, rightSub);
+            }
+        }
+        
+        return end - start;
+    }
+}
