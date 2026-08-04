@@ -1,0 +1,24 @@
+public class Solution {
+    public int maxTotalFruits(int[][] fruits, int startPos, int k) {
+        int left = 0;
+        int maxFruits = 0;
+        int currentFruits = 0;
+
+        for (int right = 0; right < fruits.length; right++) {
+            currentFruits += fruits[right][1];
+            while (left <= right && !isValidWindow(fruits[left][0], fruits[right][0], startPos, k)) {
+                currentFruits -= fruits[left][1];
+                left++;
+            }
+            maxFruits = Math.max(maxFruits, currentFruits);
+        }
+
+        return maxFruits;
+    }
+    private boolean isValidWindow(int leftPos, int rightPos, int startPos, int k) {
+        int windowLength = rightPos - leftPos;
+        int distanceToCloserEndpoint = Math.min(Math.abs(startPos - leftPos), Math.abs(startPos - rightPos));
+        
+        return (windowLength + distanceToCloserEndpoint) <= k;
+    }
+}
